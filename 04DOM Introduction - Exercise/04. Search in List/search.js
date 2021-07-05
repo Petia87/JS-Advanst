@@ -1,17 +1,19 @@
 function search() {
-   let data=document.getElementById('towns').getElementsByTagName('li');
-   let searchTerm=document.getElementById('searchText').value;
+   let listItems = document.querySelectorAll('#towns > li')
+   let input = document.querySelector('input').value
+   let result = document.getElementById('result')
+   let sum = 0
 
-   let matches=0;
-
-   for (let index = 0; index < data.length; index++) {
-      
-      if ((data[index].textContent).includes(searchTerm)) {
-         matches++;
-         data[index].style.fontWeight='bold';
-         data[index].style.textDecoration='underline';
+   for (const li of listItems) {
+      if (li.textContent.includes(input)) {
+         li.style.fontWeight = 'bold'
+         li.style.textDecoration = 'underline'
+         sum++
+      } else{
+         li.style.fontWeight = ''
+         li.style.textDecoration = ''
       }
    }
 
-   document.getElementById('result').textContent=`${matches} matches found`;
+   result.textContent = `${sum} matches found`
 }
