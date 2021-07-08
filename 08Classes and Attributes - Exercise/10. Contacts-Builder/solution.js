@@ -1,22 +1,22 @@
-class Contact {
-    constructor(firstName, lastName, phone, email) {
+class Contact{
+    constructor(firstName,lastName,phone,email){
         this.firstName = firstName;
         this.lastName = lastName;
         this.phone = phone;
         this.email = email;
         this._online = false;
     }
-    get online() {
+    get online(){
         return this._online;
     }
-    set online(value) {
+    set online(value){
         this._online = value;
         let div = document.getElementById(this.email);
-        if (div !== null) {
-            this.online == true ? div.className = 'title online' : div.className = 'title';
+        if (div !== null){
+            this.online == true ? div.className = 'title online' : div.className ='title';
         }
     }
-    render(id) {
+    render(id){
         let parent = document.getElementById(id);
         let article = document.createElement('article');
         let divTitle = document.createElement('div');
@@ -29,19 +29,19 @@ class Contact {
         divTitle.textContent = `${this.firstName} ${this.lastName}`;
         divTitle.id = this.email;
         button.textContent = '\u2139'
-        button.addEventListener('click', (e) => {
+        button.addEventListener('click',(e) =>{
             let info = e.target.parentElement.nextSibling;
-            info.style.display == 'none' ?
-                info.style.display = 'block' :
-                info.style.display = 'none';
+            info.style.display == 'none' ? 
+            info.style.display = 'block' : 
+            info.style.display = 'none';
         })
         divTitle.appendChild(button);
 
         divInfo.className = 'info';
         divInfo.style.display = 'none';
-        spanPhone.textContent = `\u260E ${this.phone}`;
+        spanPhone.textContent = `\u260E ${this.phone}`; 
         spanEmail.textContent = `\u2709 ${this.email}`;
-
+        
         divInfo.appendChild(spanPhone);
         divInfo.appendChild(spanEmail);
         article.appendChild(divTitle);
@@ -49,3 +49,15 @@ class Contact {
         parent.appendChild(article);
     }
 }
+
+//Test Cases
+let contacts = [
+    new Contact("Ivan", "Ivanov", "0888 123 456", "i.ivanov@gmail.com"),
+    new Contact("Maria", "Petrova", "0899 987 654", "mar4eto@abv.bg"),
+    new Contact("Jordan", "Kirov", "0988 456 789", "jordk@gmail.com")
+  ];
+  contacts.forEach(c => c.render('main'));
+  
+// After 1 second, change the online status to true
+ setTimeout(() => contacts[1].online = true, 2000);
+  
