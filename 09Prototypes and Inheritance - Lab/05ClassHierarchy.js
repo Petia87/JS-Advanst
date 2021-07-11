@@ -80,6 +80,5 @@ let Circle = classes.Circle;
 let c = new Circle(5);
 console.log(c.area);
 console.log(c.toString());
-//assert.equal(c.area,78.53981633974483, "1");
-//assert.equal(c.toString(),"Figures units: cm Area: 78.53981633974483 - radius: 5","2"); 
+
     
