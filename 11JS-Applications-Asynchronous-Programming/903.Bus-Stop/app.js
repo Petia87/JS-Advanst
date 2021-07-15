@@ -45,7 +45,7 @@ async function getInfo() {
         return result;
     }
 }
- 
+ /*
 function getInfo() {
     //Get dom elements
     let stopID = document.querySelector('#stopId')
@@ -74,4 +74,4 @@ function getInfo() {
     .catch((err) => stopNameDiv.textContent = 'Error');
     
     stopID.value = '';
-}
+}*/
