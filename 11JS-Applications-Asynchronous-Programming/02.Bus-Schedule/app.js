@@ -1,5 +1,4 @@
 function solve() {
-    //Keeping variables in closure
     //get the DOM elements
     const infoSpan = document.querySelector('#info > span[class=info]');
     const departButton = document.querySelector('#depart');
@@ -12,9 +11,9 @@ function solve() {
     function depart() {
         fetch(`http://localhost:3030/jsonstore/bus/schedule/${nextStopId}`)
         .then((response) => response.json())
-        .then((jsonResponse) => {
-            currentStopName = jsonResponse.name;
-            nextStopId = jsonResponse.next;
+        .then((data) => {
+            currentStopName = data.name;
+            nextStopId = data.next;
 
             infoSpan.textContent = `Next stop ${currentStopName}`;
             departButton.disabled = true;
