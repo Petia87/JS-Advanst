@@ -1,3 +1,102 @@
+let url = 'http://localhost:3030/jsonstore/phonebook';
+    const ulList = document.getElementById('phonebook');
+    const textAreaForPerson = document.getElementById('person');
+    const textAreaForPhone = document.getElementById('phone');
+ 
+    document.getElementById('btnLoad').addEventListener('click', showData);
+    //document.getElementById('btnCreate').addEventListener('click', addData);
+ 
+ 
+    function showData() {
+ 
+        fetch(url)
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+                Object.values(data).forEach(n => {
+                    let li = document.createElement('li');
+                    let deleteButton = document.createElement('button');
+                    deleteButton.setAttribute('class', 'deleteBtn');
+                    deleteButton.textContent = 'Delete';
+                    li.setAttribute('id', n._id);
+                    li.textContent = `${n.person}: ${n.phone}`;
+                    li.appendChild(deleteButton);
+                    ulList.appendChild(li);
+                });
+            })
+            .catch(dealWithErrors)
+    }
+ 
+    function deleteInformation() {
+        let senders = {
+            method: 'DELETE'
+        }
+        fetch(`http://localhost:3030/jsonstore/phonebook/${this.value}`, senders)
+            .then(printInformation)
+            .catch(dealWithErrors);
+        }
+ 
+    function dealWithErrors(){}
+
+
+/* second*/
+document.querySelector('#btnLoad').addEventListener('click', loadAllContacts);
+document.querySelector('#btnCreate').addEventListener('click', addContact);
+
+async function loadAllContacts() {
+    const response = await fetch('http://localhost:3030/jsonstore/phonebook');
+    const contacts = await response.json();
+    console.log(contacts);
+    const phoneBookUl = document.querySelector('#phonebook');
+    phoneBookUl.querySelectorAll('li').forEach(li => li.remove());
+    Object.values(contacts).map(createContactLi).forEach(li => phoneBookUl.appendChild(li));
+}
+
+function createContactLi(contact) {
+    const li = document.createElement('li');
+    li.textContent = `${contact.person}: ${contact.phone}`;
+    li.dataset.id = contact._id;
+
+    const deleteBtn = document.createElement('button');
+    deleteBtn.textContent = 'Delete';
+    deleteBtn.addEventListener('click', deleteContact);
+
+    li.appendChild(deleteBtn);
+
+    return li;
+}
+
+async function deleteContact(e) {
+    const li = e.target.closest('li')
+    const id = e.target.closest('li').dataset.id;
+
+    const response = await fetch(`http://localhost:3030/jsonstore/phonebook/${id}`, {
+        method: 'DELETE'
+    });
+
+    if (response.ok) {
+        li.remove();
+    }
+}
+
+async function addContact() {
+    const person = document.querySelector('#person');
+    const phone = document.querySelector('#phone');
+
+    let response = await fetch('http://localhost:3030/jsonstore/phonebook', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ person: person.value, phone: phone.value })
+    });
+
+    const contact = await response.json();
+    const li = createContactLi(contact);
+    document.querySelector('#phonebook').appendChild(li);
+
+    person.value = '';
+    phone.value = '';
+}
+/* not good
 function attachEvents() {
     const btnLoad=document.querySelector('#btnLoad');
     const btnCreate=document.querySelector('#btnCreate');
@@ -103,4 +202,4 @@ function attachEvents() {
     }  
 }
 
-attachEvents();
+attachEvents();*/
