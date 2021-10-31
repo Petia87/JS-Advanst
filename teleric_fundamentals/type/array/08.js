@@ -1,25 +1,39 @@
-let input = ["0,1,0,3,12"]
-
+/*7.	Max Sequence of Equal Elements
+Write a function that finds the longest sequence of equal elements in an array of numbers. 
+Input	Output
+[2, 1, 1, 2, 3, 3, 2, 2, 2, 1]	2 2 2
+[1, 1, 1, 2, 3, 1, 3, 3]	1 1 1
+[4, 4, 4, 4]	4 4 4 4
+[0, 1, 1, 5, 2, 2, 6, 3, 3]	1 1
+If several longest sequences exist, print the leftmost one.
+*/
+let input = ["2, 1, 1, 2, 3, 3, 2, 2, 2, 1"]
 let print = this.print || console.log;
 let gets = this.gets || ((arr, index) => () => arr[index++])(input, 0);
-let arr = gets().split(',').map(Number)
-let arr1 = [...arr]
-let sum = arr1.reduce((a, c) => a + c)
-let avg = sum / arr.length
-let arr2 = []
-let arr3 = []
-for (let i = 0; i < arr.length; i++) {
-    const element =+ arr[i];
-    if (element < avg) {
-        arr2.push(element)
-    } else if (element > avg) {
-        arr3.push(element)
+let arr = gets().split(",").map(Number)
+let indexOfBiggestSeq=-1
+    let maxSeqLength=0
+  
+    for (let i = 0; i < arr.length; i++) {
+        let currentEl = Number(arr[i]);
+        let currentSeqLenhth = 1;
+ 
+ 
+        for (let j = i + 1; j < arr.length; j++) {
+            let nextEl = Number(arr[j]);
+ 
+            if (nextEl !== currentEl) {
+                    break;
+            }
+            currentSeqLenhth++
+ 
+        }
+        if(currentSeqLenhth>maxSeqLength){
+            maxSeqLength=currentSeqLenhth
+            indexOfBiggestSeq=i
+        }
     }
+    let element=arr[indexOfBiggestSeq]
+    print(`${element} `.repeat(maxSeqLength).trim())
 
-}
-arr4 = [...arr1, ...arr2, ...arr3]
 
-
-print(`avg: ${avg.toFixed(2)}`)
-print(`below: ${(arr2.join(","))}`)
-print(`above: ${(arr3.join(","))}`)
