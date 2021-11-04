@@ -4,12 +4,12 @@ let print = this.print || console.log;
 let gets = this.gets || ((arr, index) => () => arr[index++])(input, 0);
 let word = gets()
 let num = + gets()
-let difWord = gets().split(',')
+
 
 let isInclude = false
 
 for (let i = 0; i < num; i++) {
-    let arr = difWord[i]
+    let arr = gets()
   
     if (word.length != arr.length) {
         isInclude = false
