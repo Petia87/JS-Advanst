@@ -1,4 +1,4 @@
-let input = ["Tempera#### na @#$ata 23 grad#%&"]
+let input = ["Tempera#### na @#$ata 23 grad#%&."]
 
 let print = this.print || console.log;
 let gets = this.gets || ((arr, index) => () => arr[index++])(input, 0);
@@ -6,7 +6,7 @@ let text = gets()
 let max = 0
 
 
-let regex = /[A-Za-z0-9 ]+/g;
+let regex = /[A-Za-z0-9 .]+/g;
 let count = 0
 //let containsValidDate = regex.test(text);
 
