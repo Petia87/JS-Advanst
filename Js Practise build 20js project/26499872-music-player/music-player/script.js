@@ -54,7 +54,8 @@ function pauseSong() {
 }
 
 // Play or Pause Event Listener
-playBtn.addEventListener('click', () => (isPlaying ? pauseSong() : playSong()));
+playBtn.addEventListener('click', () => 
+(isPlaying ? pauseSong() : playSong()));
 
 // Update DOM
 function loadSong(song) {
