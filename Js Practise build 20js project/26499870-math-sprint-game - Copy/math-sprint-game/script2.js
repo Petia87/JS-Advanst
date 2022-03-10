@@ -17,32 +17,30 @@ const finalTimeEl = document.querySelector('.final-time');
 const baseTimeEl = document.querySelector('.base-time');
 const penaltyTimeEl = document.querySelector('.penalty-time');
 const playAgainBtn = document.querySelector('.play-again');
+
 //Acordion
 const sum = document.querySelector('.sum');
 const subtraction = document.querySelector('.subtraction');
 const multiply = document.querySelector('.multiply');
 const division = document.querySelector('.division');
 const accordionButtons = document.querySelectorAll('.accordion')
+const accordionContainer = document.querySelector('.accordion-container')
 
-
-
-
-
-//Acordion
-var acc = document.getElementsByClassName("accordion");
-var i;
-
-for (i = 0; i < acc.length; i++) {
-  acc[i].addEventListener("click", function () {
-    this.classList.toggle("active");
-    var panel = this.nextElementSibling;
-    if (panel.style.display === "block") {
-      panel.style.display = "none";
-    } else {
-      panel.style.display = "block";
+/*function accordion() {
+  let sumbol='';
+  let symbol='
+    if (sum.checked) {
+     console.log(1)
     }
-  });
+  //});
+
 }
+accordion()*/
+let sumbol = '';
+let symbol = ''
+
+equationsToDOM();
+
 // Equations
 let questionAmount = 0;
 let equationsArray = [];
@@ -66,11 +64,29 @@ let finalTimeDisplay = '0.0';
 // Scroll
 let valueY = 0;
 
+//Acordion
+var acc = document.getElementsByClassName("accordion");
+var i;
+
+for (i = 0; i < acc.length; i++) {
+
+  acc[i].addEventListener("click", function () {
+
+    this.classList.toggle("active");
+    var panel = this.nextElementSibling;
+    if (panel.style.display === "block") {
+      panel.style.display = "none";
+    } else {
+      panel.style.display = "block";
+    }
+  });
+}
+
+
 // Refresh Splash Page Best Scores
 function bestScoresToDOM() {
   bestScores.forEach((bestScore, index) => {
     const bestScoreEl = bestScore;
-    console.log(bestScoreEl);
     bestScoreEl.textContent = `${bestScoreArray[index].bestScore}s`;
   });
 }
@@ -195,6 +211,41 @@ function showGamePage() {
   gamePage.hidden = false;
   countdownPage.hidden = true;
 }
+/***********ACORDION BUTTONS******************************/
+/*accordionButtons.forEach((accordionButton) => {
+  if (accordionButton.classList.contains('sum')) {
+    accordionButton.addEventListener('click', () => {
+      createEquations("sum")
+      sumbol = '+'
+      symbol = '+'
+      console.log(1);
+    });
+  } else if (accordionButton.classList.contains('sum')) {
+    accordionButton.addEventListener('click', () => {
+      createEquations("subtraction")
+      sumbol = '+'
+      symbol = '+'
+      console.log(2);
+    });
+  } else if (accordionButton.classList.contains('sum')) {
+    accordionButton.addEventListener('click', () => {
+      createEquations("multiply")
+      sumbol = '*'
+      symbol = '*'
+      console.log(3);
+    });
+  } else if (accordionButton.classList.contains('sum')) {
+    accordionButton.addEventListener('click', () => {
+      createEquations("division")
+      sumbol = '/'
+      symbol = '/'
+      console.log(1);
+    });
+  }
+}*/
+
+/***********ACORDION BUTTONS******************************/
+
 
 // Get Random Number up to a certain amount
 function getRandomInt(max) {
@@ -213,56 +264,53 @@ function createEquations(buttonTipe) {
   for (let i = 0; i < correctEquations; i++) {
     firstNumber = getRandomInt(9);
     secondNumber = getRandomInt(9);
+    /*const calculate = {
+      '/': (firstNumber, secondNumber) => firstNumber / secondNumber,
+    
+      '*': (firstNumber, secondNumber) => firstNumber * secondNumber,
+    
+      '+': (firstNumber, secondNumber) => firstNumber + secondNumber,
+    
+      '-': (firstNumber, secondNumber) => firstNumber - secondNumber,
+    
+      '=': (firstNumber, secondNumber) => secondNumber,
+    };
+    */
     let equationValue = 0;
-    let equation = "";
-
     if (buttonTipe == "sum") {
       equationValue = firstNumber + secondNumber;
-      equation = `${firstNumber} + ${secondNumber} = ${equationValue}`;
     } else if (buttonTipe == "subtraction") {
       equationValue = firstNumber - secondNumber;
-      equation = `${firstNumber} - ${secondNumber} = ${equationValue}`;
     } else if (buttonTipe == "multiply") {
-      equationValue = firstNumber * secondNumber;
-      equation = `${firstNumber} x ${secondNumber} = ${equationValue}`;
+      equationValue = firstNumber - secondNumber;
     } else if (buttonTipe == "division") {
-      equationValue = firstNumber / secondNumber;
-      equation = `${firstNumber} / ${secondNumber} = ${equationValue}`
+      equationValue = firstNumber - secondNumber;
     }
-
+    //const equationValue = firstNumber*secondNumber;
+    const equation = `${firstNumber} ${symbol} ${secondNumber} = ${equationValue}`;
+    console.log(equation);
     equationObject = { value: equation, evaluated: 'true' };
     equationsArray.push(equationObject);
   }
+
   // Loop through for each wrong equation, mess with the equation results, push to array
   for (let i = 0; i < wrongEquations; i++) {
     firstNumber = getRandomInt(9);
     secondNumber = getRandomInt(9);
-    let equationValue = 0;
+    let equationValue = 0
 
     if (buttonTipe == "sum") {
       equationValue = firstNumber + secondNumber;
-      wrongFormat[0] = `${firstNumber} + ${secondNumber + 1} = ${equationValue}`;
-      wrongFormat[1] = `${firstNumber} + ${secondNumber} = ${equationValue - 1}`;
-      wrongFormat[2] = `${firstNumber + 1} + ${secondNumber} = ${equationValue}`;
     } else if (buttonTipe == "subtraction") {
       equationValue = firstNumber - secondNumber;
-      wrongFormat[0] = `${firstNumber} - ${secondNumber + 1} = ${equationValue}`;
-      wrongFormat[1] = `${firstNumber} - ${secondNumber} = ${equationValue - 1}`;
-      wrongFormat[2] = `${firstNumber + 1} - ${secondNumber} = ${equationValue}`;
     } else if (buttonTipe == "multiply") {
-      equationValue = firstNumber * secondNumber;
-      wrongFormat[0] = `${firstNumber} x ${secondNumber + 1} = ${equationValue}`;
-      wrongFormat[1] = `${firstNumber} x ${secondNumber} = ${equationValue - 1}`;
-      wrongFormat[2] = `${firstNumber + 1} x ${secondNumber} = ${equationValue}`;
+      equationValue = firstNumber - secondNumber;
     } else if (buttonTipe == "division") {
-      equationValue = firstNumber / secondNumber;
-      wrongFormat[0] = `${firstNumber} / ${secondNumber + 1} = ${equationValue}`;
-      wrongFormat[1] = `${firstNumber} / ${secondNumber} = ${equationValue - 1}`;
-      wrongFormat[2] = `${firstNumber + 1} / ${secondNumber} = ${equationValue}`;
+      equationValue = firstNumber - secondNumber;
     }
-
-
-
+    wrongFormat[0] = `${firstNumber}${symbol}${secondNumber + 1} = ${equationValue}`;
+    wrongFormat[1] = `${firstNumber}${symbol} ${secondNumber} = ${equationValue - 1}`;
+    wrongFormat[2] = `${firstNumber + 1}${symbol}${secondNumber} = ${equationValue}`;
     const formatChoice = getRandomInt(2);
     const equation = wrongFormat[formatChoice];
     equationObject = { value: equation, evaluated: 'false' };
@@ -270,119 +318,169 @@ function createEquations(buttonTipe) {
   }
   shuffle(equationsArray);
 }
-
-// Add Equations to DOM
-function equationsToDOM() {
-  equationsArray.forEach((equation) => {
-    // Item
-    const item = document.createElement('div');
-    item.classList.add('item');
-    // Equation Text
-    const equationText = document.createElement('h1');
-    equationText.textContent = equation.value;
-    // Append
-    item.appendChild(equationText);
-    itemContainer.appendChild(item);
-  });
-}
-
-// Dynamically adding correct/incorrect equations
-function populateGamePage() {
-  // Reset DOM, Set Blank Space Above
-  itemContainer.textContent = '';
-  // Spacer
-  const topSpacer = document.createElement('div');
-  topSpacer.classList.add('height-240');
-  // Selected Item
-  const selectedItem = document.createElement('div');
-  selectedItem.classList.add('selected-item');
-  // Append
-  itemContainer.append(topSpacer, selectedItem);
-
-  // Create Equations, Build Elements in DOM
-  //createEquations();
-  //Accordon
-
-sum.addEventListener('click', () => {
-  createEquations("sum")
-})
-subtraction.addEventListener('click', () => {
-  createEquations("subtraction")
-})
-multiply.addEventListener('click', () => {
-  createEquations("multiply")
-})
-division.addEventListener('click', () => {
-  createEquations("division")
-})
-  equationsToDOM();
-/********************* */
-
-/******************************- */
-
-  // Set Blank Space Below
-  const bottomSpacer = document.createElement('div');
-  bottomSpacer.classList.add('height-500');
-  itemContainer.appendChild(bottomSpacer);
-}
-
-// Displays 3, 2, 1, GO!
-function countdownStart() {
-  countdown.textContent = '3';
-  setTimeout(() => {
-    countdown.textContent = '2';
-  }, 1000);
-  setTimeout(() => {
-    countdown.textContent = '1';
-  }, 2000);
-  setTimeout(() => {
-    countdown.textContent = 'GO!';
-  }, 3000);
-}
-
-// Navigate from Splash Page to CountdownPage to Game Page
-function showCountdown() {
-  countdownPage.hidden = false;
-  splashPage.hidden = true;
-  countdownStart();
-  populateGamePage();
-  setTimeout(showGamePage, 4000);
-}
-// Get  selected accordion
-function getRadioValue() {
-  let radioValue;
-  radioInputs.forEach((radioInput) => {
-    if (radioInput.checked) {
-      radioValue = radioInput.value;
-    }
-  });
-  return radioValue;
-}
-
-
-
-
-// Form that decides amount of Questions
-function selectQuestionAmount(e) {
-  e.preventDefault();
-  questionAmount = getRadioValue();
-  console.log('question amount:', questionAmount);
-  if (questionAmount) {
-    showCountdown();
+/***********ACORDION BUTTONS******************************/
+accordionButtons.forEach((accordionButton) => {
+  if (accordionButton.classList.contains('sum')) {
+    accordionButton.addEventListener('click', () => {
+      createEquations("sum")
+      sumbol = '+'
+      symbol = '+'
+      console.log(1);
+    });
+  } else if (accordionButton.classList.contains('subtraction')) {
+    accordionButton.addEventListener('click', () => {
+      createEquations("subtraction")
+      sumbol = '+'
+      symbol = '+'
+      console.log(2);
+    });
+  } else if (accordionButton.classList.contains('multiply')) {
+    accordionButton.addEventListener('click', () => {
+      createEquations("multiply")
+      sumbol = '*'
+      symbol = '*'
+      console.log(3);
+    });
+  } else if (accordionButton.classList.contains('division')) {
+    accordionButton.addEventListener('click', () => {
+      createEquations("division")
+      sumbol = '/'
+      symbol = '/'
+      console.log(1);
+    });
   }
-}
+})
+    /***********ACORDION BUTTONS******************************/
 
-// Switch selected input styling
-startForm.addEventListener('click', () => {
-  radioContainers.forEach((radioEl) => {
-    // Remove Selected Label Styling
-    radioEl.classList.remove('selected-label');
-    // Add it back if radio input is checked
-    if (radioEl.children[1].checked) {
-      radioEl.classList.add('selected-label');
+
+    /*//First*************************************************
+    sum.addEventListener('click', () => {
+      createEquations("sum")
+      sumbol = '+'
+      symbol = '+'
+      console.log(1);
+    })
+    subtraction.addEventListener('click', () => {
+      createEquations("subtraction")
+      sumbol = '-'
+      symbol = '-'
+      console.log(2);
+    })
+    multiply.addEventListener('click', () => {
+      createEquations("multiply")
+      sumbol = '*'
+      symbol = '*'
+      console.log(3);
+    })
+    division.addEventListener('click', () => {
+      createEquations("division")
+      sumbol = '-'
+      symbol = '-'
+      console.log(4);
+    })
+  }
+}*/
+    // Add Equations to DOM
+    function equationsToDOM() {
+    equationsArray.forEach((equation) => {
+      // Item
+      const item = document.createElement('div');
+      item.classList.add('item');
+      // Equation Text
+      const equationText = document.createElement('h1');
+      equationText.textContent = equation.value;
+      // Append
+      item.appendChild(equationText);
+      itemContainer.appendChild(item);
+    });
+  }
+
+    // Dynamically adding correct/incorrect equations
+    function populateGamePage() {
+    // Reset DOM, Set Blank Space Above
+    itemContainer.textContent = '';
+    // Spacer
+    const topSpacer = document.createElement('div');
+    topSpacer.classList.add('height-240');
+    // Selected Item
+    const selectedItem = document.createElement('div');
+    selectedItem.classList.add('selected-item');
+    // Append
+    itemContainer.append(topSpacer, selectedItem);
+
+    // Create Equations, Build Elements in DOM
+    createEquations();
+    equationsToDOM();
+
+    // Set Blank Space Below
+    const bottomSpacer = document.createElement('div');
+    bottomSpacer.classList.add('height-500');
+    itemContainer.appendChild(bottomSpacer);
+  }
+
+    // Displays 3, 2, 1, GO!
+    function countdownStart() {
+    countdown.textContent = '3';
+    setTimeout(() => {
+      countdown.textContent = '2';
+    }, 1000);
+    setTimeout(() => {
+      countdown.textContent = '1';
+    }, 2000);
+    setTimeout(() => {
+      countdown.textContent = 'GO!';
+    }, 3000);
+  }
+
+    // Navigate from Splash Page to CountdownPage to Game Page
+    function showCountdown() {
+    countdownPage.hidden = false;
+    splashPage.hidden = true;
+    countdownStart();
+    populateGamePage();
+    setTimeout(showGamePage, 4000);
+  }
+
+    // Get the value from selected radio button
+    function getRadioValue() {
+    let radioValue;
+    radioInputs.forEach((radioInput) => {
+      if (radioInput.checked) {
+        radioValue = radioInput.value;
+      }
+    });
+    return radioValue;
+  }
+
+    // Form that decides amount of Questions
+    function selectQuestionAmount(e) {
+    e.preventDefault();
+    questionAmount = getRadioValue();
+    console.log('question amount:', questionAmount);
+    if (questionAmount) {
+      showCountdown();
     }
+  }
+
+    // Switch selected input styling
+    startForm.addEventListener('click', () => {
+    radioContainers.forEach((radioEl) => {
+      // Remove Selected Label Styling
+      radioEl.classList.remove('selected-label');
+      // Add it back if radio input is checked
+      if (radioEl.children[1].checked) {
+        radioEl.classList.add('selected-label');
+      }
+    });
+    radioContainers.forEach((radioEl) => {
+      // Remove Selected Label Styling
+      radioEl.classList.remove('selected-label');
+      // Add it back if radio input is checked
+      if (radioEl.children[1].checked) {
+        radioEl.classList.add('selected-label');
+      }
+    });
   });
-});
 
 // Event Listeners
 gamePage.addEventListener('click', startTimer);
@@ -390,3 +488,4 @@ startForm.addEventListener('submit', selectQuestionAmount);
 
 // On Load
 getSavedBestScores();
+

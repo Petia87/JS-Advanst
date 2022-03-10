@@ -219,13 +219,13 @@ function createEquations(buttonTipe) {
     if (buttonTipe == "sum") {
       equationValue = firstNumber + secondNumber;
       equation = `${firstNumber} + ${secondNumber} = ${equationValue}`;
-    } else if (buttonTipe == "subtraction") {
+    } else if (buttonTipe == subtraction) {
       equationValue = firstNumber - secondNumber;
       equation = `${firstNumber} - ${secondNumber} = ${equationValue}`;
-    } else if (buttonTipe == "multiply") {
+    } else if (buttonTipe == multiply) {
       equationValue = firstNumber * secondNumber;
       equation = `${firstNumber} x ${secondNumber} = ${equationValue}`;
-    } else if (buttonTipe == "division") {
+    } else if (buttonTipe == division) {
       equationValue = firstNumber / secondNumber;
       equation = `${firstNumber} / ${secondNumber} = ${equationValue}`
     }
@@ -244,17 +244,17 @@ function createEquations(buttonTipe) {
       wrongFormat[0] = `${firstNumber} + ${secondNumber + 1} = ${equationValue}`;
       wrongFormat[1] = `${firstNumber} + ${secondNumber} = ${equationValue - 1}`;
       wrongFormat[2] = `${firstNumber + 1} + ${secondNumber} = ${equationValue}`;
-    } else if (buttonTipe == "subtraction") {
+    } else if (buttonTipe == Subtraction) {
       equationValue = firstNumber - secondNumber;
       wrongFormat[0] = `${firstNumber} - ${secondNumber + 1} = ${equationValue}`;
       wrongFormat[1] = `${firstNumber} - ${secondNumber} = ${equationValue - 1}`;
       wrongFormat[2] = `${firstNumber + 1} - ${secondNumber} = ${equationValue}`;
-    } else if (buttonTipe == "multiply") {
+    } else if (buttonTipe == Subtraction) {
       equationValue = firstNumber * secondNumber;
       wrongFormat[0] = `${firstNumber} x ${secondNumber + 1} = ${equationValue}`;
       wrongFormat[1] = `${firstNumber} x ${secondNumber} = ${equationValue - 1}`;
       wrongFormat[2] = `${firstNumber + 1} x ${secondNumber} = ${equationValue}`;
-    } else if (buttonTipe == "division") {
+    } else if (buttonTipe == Subtraction) {
       equationValue = firstNumber / secondNumber;
       wrongFormat[0] = `${firstNumber} / ${secondNumber + 1} = ${equationValue}`;
       wrongFormat[1] = `${firstNumber} / ${secondNumber} = ${equationValue - 1}`;
@@ -313,7 +313,7 @@ multiply.addEventListener('click', () => {
   createEquations("multiply")
 })
 division.addEventListener('click', () => {
-  createEquations("division")
+  createEquations("  division")
 })
   equationsToDOM();
 /********************* */
