@@ -17,32 +17,8 @@ const finalTimeEl = document.querySelector('.final-time');
 const baseTimeEl = document.querySelector('.base-time');
 const penaltyTimeEl = document.querySelector('.penalty-time');
 const playAgainBtn = document.querySelector('.play-again');
-//Acordion
-const sum = document.querySelector('.sum');
-const subtraction = document.querySelector('.subtraction');
-const multiply = document.querySelector('.multiply');
-const division = document.querySelector('.division');
-const accordionButtons = document.querySelectorAll('.accordion')
 
 
-
-
-
-//Acordion
-var acc = document.getElementsByClassName("accordion");
-var i;
-
-for (i = 0; i < acc.length; i++) {
-  acc[i].addEventListener("click", function () {
-    this.classList.toggle("active");
-    var panel = this.nextElementSibling;
-    if (panel.style.display === "block") {
-      panel.style.display = "none";
-    } else {
-      panel.style.display = "block";
-    }
-  });
-}
 // Equations
 let questionAmount = 0;
 let equationsArray = [];
@@ -63,14 +39,64 @@ let penaltyTime = 0;
 let finalTime = 0;
 let finalTimeDisplay = '0.0';
 
+//Acordion
+const sum = document.querySelector('.sum');
+const subtraction = document.querySelector('.subtraction');
+const multiply = document.querySelector('.multiply');
+const division = document.querySelector('.division');
+const accordionButtons = document.querySelectorAll('.accordion')
+
 // Scroll
 let valueY = 0;
+
+/******************************** */
+const { body } = document;
+
+function changeBackground(number) {
+  // Check if background already showing
+  let previousBackground;
+  if (body.className) {
+    previousBackground = body.className;
+  }
+  // Reset background
+  body.className = '';
+  // If background already on, turn off, else turn on background
+  switch (number) {
+    case '1':
+      return (previousBackground === 'background-1' ? false : body.classList.add('background-1'));
+    case '2':
+      return (previousBackground === 'background-2' ? false : body.classList.add('background-2'));
+    case '3':
+      return (previousBackground === 'background-3' ? false : body.classList.add('background-3'));
+    default:
+      break;
+  }
+}
+
+let symbol=''
+sum.addEventListener('click', () => {
+  symbol="+"
+    console.log( symbol);
+})
+subtraction.addEventListener('click', () => {
+  symbol="-"
+  console.log( symbol);
+})
+multiply.addEventListener('click', () => {
+  symbol="*"
+  console.log( symbol);
+})
+division.addEventListener('click', () => {
+  symbol="/"
+  console.log( symbol);
+})
+
+/************************** */
 
 // Refresh Splash Page Best Scores
 function bestScoresToDOM() {
   bestScores.forEach((bestScore, index) => {
     const bestScoreEl = bestScore;
-    console.log(bestScoreEl);
     bestScoreEl.textContent = `${bestScoreArray[index].bestScore}s`;
   });
 }
@@ -202,7 +228,8 @@ function getRandomInt(max) {
 }
 
 // Create Correct/Incorrect Random Equations
-function createEquations(buttonTipe) {
+function createEquations(symbol) {
+console.log(symbol)
   // Randomly choose how many correct equations there should be
   const correctEquations = getRandomInt(questionAmount);
   console.log('correct equations:', correctEquations);
@@ -213,23 +240,18 @@ function createEquations(buttonTipe) {
   for (let i = 0; i < correctEquations; i++) {
     firstNumber = getRandomInt(9);
     secondNumber = getRandomInt(9);
-    let equationValue = 0;
-    let equation = "";
-
-    if (buttonTipe == "sum") {
-      equationValue = firstNumber + secondNumber;
-      equation = `${firstNumber} + ${secondNumber} = ${equationValue}`;
-    } else if (buttonTipe == "subtraction") {
-      equationValue = firstNumber - secondNumber;
-      equation = `${firstNumber} - ${secondNumber} = ${equationValue}`;
-    } else if (buttonTipe == "multiply") {
-      equationValue = firstNumber * secondNumber;
-      equation = `${firstNumber} x ${secondNumber} = ${equationValue}`;
-    } else if (buttonTipe == "division") {
-      equationValue = firstNumber / secondNumber;
-      equation = `${firstNumber} / ${secondNumber} = ${equationValue}`
-    }
-
+    let equationValue = '';
+    if (symbol==="+") {
+      equationValue = firstNumber + secondNumber
+    } else if (symbol==="-") {
+      equationValue = firstNumber - secondNumber
+    } else if (symbol==="*") {
+      equationValue = firstNumber * secondNumber
+    }else if (symbol==="/") {
+    equationValue = firstNumber / secondNumber
+  }
+   //const equationValue = firstNumber * secondNumber;
+    const equation = `${firstNumber} ${symbol} ${secondNumber} = ${equationValue}`;
     equationObject = { value: equation, evaluated: 'true' };
     equationsArray.push(equationObject);
   }
@@ -237,32 +259,10 @@ function createEquations(buttonTipe) {
   for (let i = 0; i < wrongEquations; i++) {
     firstNumber = getRandomInt(9);
     secondNumber = getRandomInt(9);
-    let equationValue = 0;
-
-    if (buttonTipe == "sum") {
-      equationValue = firstNumber + secondNumber;
-      wrongFormat[0] = `${firstNumber} + ${secondNumber + 1} = ${equationValue}`;
-      wrongFormat[1] = `${firstNumber} + ${secondNumber} = ${equationValue - 1}`;
-      wrongFormat[2] = `${firstNumber + 1} + ${secondNumber} = ${equationValue}`;
-    } else if (buttonTipe == "subtraction") {
-      equationValue = firstNumber - secondNumber;
-      wrongFormat[0] = `${firstNumber} - ${secondNumber + 1} = ${equationValue}`;
-      wrongFormat[1] = `${firstNumber} - ${secondNumber} = ${equationValue - 1}`;
-      wrongFormat[2] = `${firstNumber + 1} - ${secondNumber} = ${equationValue}`;
-    } else if (buttonTipe == "multiply") {
-      equationValue = firstNumber * secondNumber;
-      wrongFormat[0] = `${firstNumber} x ${secondNumber + 1} = ${equationValue}`;
-      wrongFormat[1] = `${firstNumber} x ${secondNumber} = ${equationValue - 1}`;
-      wrongFormat[2] = `${firstNumber + 1} x ${secondNumber} = ${equationValue}`;
-    } else if (buttonTipe == "division") {
-      equationValue = firstNumber / secondNumber;
-      wrongFormat[0] = `${firstNumber} / ${secondNumber + 1} = ${equationValue}`;
-      wrongFormat[1] = `${firstNumber} / ${secondNumber} = ${equationValue - 1}`;
-      wrongFormat[2] = `${firstNumber + 1} / ${secondNumber} = ${equationValue}`;
-    }
-
-
-
+    const equationValue = firstNumber * secondNumber;
+    wrongFormat[0] = `${firstNumber} ${symbol} ${secondNumber + 1} = ${equationValue}`;
+    wrongFormat[1] = `${firstNumber} ${symbol}${secondNumber} = ${equationValue - 1}`;
+    wrongFormat[2] = `${firstNumber + 1} ${symbol} ${secondNumber} = ${equationValue}`;
     const formatChoice = getRandomInt(2);
     const equation = wrongFormat[formatChoice];
     equationObject = { value: equation, evaluated: 'false' };
@@ -300,25 +300,8 @@ function populateGamePage() {
   itemContainer.append(topSpacer, selectedItem);
 
   // Create Equations, Build Elements in DOM
-  //createEquations();
-  //Accordon
-
-sum.addEventListener('click', () => {
-  createEquations("sum")
-})
-subtraction.addEventListener('click', () => {
-  createEquations("subtraction")
-})
-multiply.addEventListener('click', () => {
-  createEquations("multiply")
-})
-division.addEventListener('click', () => {
-  createEquations("division")
-})
+  createEquations(symbol);
   equationsToDOM();
-/********************* */
-
-/******************************- */
 
   // Set Blank Space Below
   const bottomSpacer = document.createElement('div');
@@ -348,7 +331,8 @@ function showCountdown() {
   populateGamePage();
   setTimeout(showGamePage, 4000);
 }
-// Get  selected accordion
+
+// Get the value from selected radio button
 function getRadioValue() {
   let radioValue;
   radioInputs.forEach((radioInput) => {
@@ -359,16 +343,13 @@ function getRadioValue() {
   return radioValue;
 }
 
-
-
-
 // Form that decides amount of Questions
 function selectQuestionAmount(e) {
   e.preventDefault();
   questionAmount = getRadioValue();
   console.log('question amount:', questionAmount);
   if (questionAmount) {
-    showCountdown();
+      showCountdown();
   }
 }
 
