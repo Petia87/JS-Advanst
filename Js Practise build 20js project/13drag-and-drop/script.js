@@ -65,7 +65,6 @@ function createItemEl(columnEl, column, item, index) {
   listEl.setAttribute('onfocusout', `updateItem(${index}, ${column})`);
   listEl.setAttribute('ondragstart', 'drag(event)');
   listEl.contentEditable = true;
-  console.log(listEl);
   // Append
   columnEl.appendChild(listEl);
 }
