@@ -13,7 +13,7 @@ const downloadBtn = document.getElementById('download');
 const { body } = document;
 
 // Global Variables
-const canvas = document.createElement('canvas');
+let canvas = document.createElement('canvas');
 canvas.id = 'canvas';
 const context = canvas.getContext('2d');
 let currentSize = 10;
@@ -283,6 +283,7 @@ document.addEventListener('DOMContentLoaded', setupCanvas);
   
 function setupCanvas(){
     // Get reference to canvas element
+    canvas=document.createElement('canvas')
     ctx = canvas.getContext('2d');
     ctx.strokeStyle = strokeColor;
     ctx.lineWidth = line_Width;
@@ -429,6 +430,7 @@ function drawRubberbandShape(loc){
     if(currentTool === "brush"){
         // Create paint brush
         DrawBrush();
+        console.log(1);
     } else if(currentTool === "line"){
         // Draw Line
         ctx.beginPath();
@@ -495,7 +497,7 @@ function DrawBrush(){
     }
 }
  
-/*function ReactToMouseDown(e){
+function ReactToMouseDown(e){
     // Change the mouse pointer to a crosshair
     canvas.style.cursor = "crosshair";
     // Store location 
@@ -513,7 +515,7 @@ function DrawBrush(){
         usingBrush = true;
         AddBrushPoint(loc.x, loc.y);
     }
-};*/
+};
  
 function ReactToMouseMove(e){
     canvas.style.cursor = "crosshair";
