@@ -1,5 +1,32 @@
+const api = {
+  key: "4d8fb5b93d4af21d66a2948710284366",
+  base: "https://api.openweathermap.org/data/2.5/"
+}
 
-let weather = {
+const searchbar = document.querySelector('.search-bar');
+searchbar.addEventListener('keypress', setQuery)
+
+function setQuery(evt) {
+  if (evt.keyCode == 13) {
+    getResults(searchbox.value);
+  }
+}
+
+function getResults (city) {
+  fetch(`${api.base}weather?q=${city}&units=metric&appid=${api.key}`)
+  .then((response) => {
+    if (!response.ok) {
+      alert("No weather found.");
+      throw new Error("No weather found.");
+    }
+    return response.json();
+  }).then(displayResults);
+  console.log(displayResults);
+}
+
+
+/****************************/
+/*let weather = {
   apiKey: "a0aca8a89948154a4182dcecc780b513",
   fetchWeather: function (city) {
     fetch(
@@ -53,3 +80,4 @@ document
   });
 
 weather.fetchWeather("Denver");
+*/
